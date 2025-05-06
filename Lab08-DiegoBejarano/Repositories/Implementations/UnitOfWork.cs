@@ -8,13 +8,14 @@ public class UnitOfWork : IUnitOfWork
     private readonly Dictionary<string, object> _repositories;
     
     public IClienteRepository Clientes { get; }
+    public IProductRepository Products { get; }
 
-    public UnitOfWork(ApplicationDbContext context, IClienteRepository clienteRepository)
+    public UnitOfWork(ApplicationDbContext context, IClienteRepository clienteRepository, IProductRepository productRepository)
     {
         _context = context;
         _repositories = new Dictionary<string, object>();
         Clientes = clienteRepository;
-
+        Products = productRepository;
     }
     
     public Task<int> Complete()

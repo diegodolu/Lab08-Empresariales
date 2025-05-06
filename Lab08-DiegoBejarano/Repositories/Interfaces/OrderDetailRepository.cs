@@ -1,6 +1,6 @@
 namespace Lab08_DiegoBejarano.Repositories;
 
-public interface IUnitOfWork
+public interface OrderDetailRepository
 {
     
 }

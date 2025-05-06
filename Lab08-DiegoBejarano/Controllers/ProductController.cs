@@ -28,4 +28,13 @@ public class ProductController : ControllerBase
         var products = await _unitOfWork.OrderDetails.GetProducstByOrderId(id);
         return Ok(products);
     }
+
+    [HttpGet("order/{id}/sum")]
+    public async Task<IActionResult> GetTotalProductsByOrderId([FromRoute] int id)
+    {
+        var total = await _unitOfWork.OrderDetails.GetTotalProductQuantityByOrderIdAsync(id);
+        return Ok(total);
+    }
+    
+    
 }

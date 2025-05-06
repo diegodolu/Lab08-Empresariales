@@ -5,4 +5,5 @@ namespace Lab08_DiegoBejarano.Repositories;
 public interface IOrderDetailRepository
 {
     Task<List<ProductDto>> GetProducstByOrderId(int id);
+    Task<int> GetTotalProductQuantityByOrderIdAsync(int id);
 }

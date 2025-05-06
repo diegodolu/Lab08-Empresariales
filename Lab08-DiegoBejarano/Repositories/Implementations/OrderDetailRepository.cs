@@ -26,4 +26,11 @@ public class OrderDetailRepository : IOrderDetailRepository
             .ToListAsync();
         return products;
     }
+
+    public async Task<int> GetTotalProductQuantityByOrderIdAsync(int id)
+    {
+        return await _context.Orderdetails
+            .Where(od => od.OrderId == id)
+            .SumAsync(od => od.Quantity);
+    }
 }

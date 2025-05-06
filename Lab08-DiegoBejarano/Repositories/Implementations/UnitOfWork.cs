@@ -9,13 +9,15 @@ public class UnitOfWork : IUnitOfWork
     
     public IClienteRepository Clientes { get; }
     public IProductRepository Products { get; }
+    public IOrderDetailRepository OrderDetails { get; }
 
-    public UnitOfWork(ApplicationDbContext context, IClienteRepository clienteRepository, IProductRepository productRepository)
+    public UnitOfWork(ApplicationDbContext context, IClienteRepository clienteRepository, IProductRepository productRepository, IOrderDetailRepository orderDetailRepository)
     {
         _context = context;
         _repositories = new Dictionary<string, object>();
         Clientes = clienteRepository;
         Products = productRepository;
+        OrderDetails = orderDetailRepository;
     }
     
     public Task<int> Complete()

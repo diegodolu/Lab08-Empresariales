@@ -21,4 +21,11 @@ public class ProductController : ControllerBase
         var products = await _unitOfWork.Products.GetProductsWithPriceHigherThan(value);
         return Ok(products);
     }
+
+    [HttpGet("order/{id}")]
+    public async Task<IActionResult> GetProductsByOrderId([FromRoute] int id)
+    {
+        var products = await _unitOfWork.OrderDetails.GetProducstByOrderId(id);
+        return Ok(products);
+    }
 }

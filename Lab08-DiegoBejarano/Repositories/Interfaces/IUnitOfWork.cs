@@ -6,5 +6,6 @@ public interface IUnitOfWork : IDisposable
     Task<int> Complete();
     IClienteRepository Clientes { get; }
     IProductRepository Products { get; }
+    IOrderDetailRepository OrderDetails { get; }
 
 }

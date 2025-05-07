@@ -26,4 +26,5 @@ public class ClienteRepository : IClienteRepository
 
         return list;
     }
+    
 }

@@ -21,5 +21,18 @@ public class ClienteController : ControllerBase
         var clients = await _unitOfWork.Clientes.NamedBy(name);
         return Ok(clients);
     }
+    
+    [HttpGet("most-orders")]
+    public async Task<IActionResult> GetClientWithMostOrders()
+    {
+        var clientWithMostOrders = await _unitOfWork.Orders.GetClientWithMostOrdersAsync();
+    
+        if (clientWithMostOrders == null)
+        {
+            return NotFound(new { message = "No se encontró el cliente con más pedidos." });
+        }
+
+        return Ok(clientWithMostOrders);
+    }
 
 }

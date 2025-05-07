@@ -7,5 +7,6 @@ public interface IUnitOfWork : IDisposable
     IClienteRepository Clientes { get; }
     IProductRepository Products { get; }
     IOrderDetailRepository OrderDetails { get; }
+    IOrderRepository Orders { get; }
 
 }

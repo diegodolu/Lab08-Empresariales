@@ -48,4 +48,11 @@ public class OrderController : Controller
         // Retornamos la lista de productos
         return Ok(products);
     }
+
+    [HttpGet("orders-details")]
+    public async Task<IActionResult> GetOrdersWithDetails()
+    {
+        var orders = await _unitOfWork.Orders.GetOrdersWithDetails();
+        return Ok(orders);
+    }
 }

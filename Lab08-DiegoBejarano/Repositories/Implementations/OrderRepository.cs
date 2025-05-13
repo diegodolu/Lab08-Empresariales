@@ -52,6 +52,29 @@ public class OrderRepository : IOrderRepository
             Name = client.Name,
         };
     }
+
+    public async Task<List<OrderDetailsDto>> GetOrdersWithDetails()
+    {
+        var ordersWithDetails = await _context.Orders
+            .Include(order => order.Orderdetails)
+            .ThenInclude(orderDetail => orderDetail.Product)
+            .AsNoTracking()
+            .Select(order => new OrderDetailsDto
+            {
+                OrderId = order.OrderId,
+                OrderDate = order.OrderDate,
+                Products = order.Orderdetails
+                    .Select(od => new ProductDto2
+                    {
+                        ProductName = od.Product.Name,
+                        Quantity = od.Quantity,
+                        Price = od.Product.Price
+                    }).ToList()
+            }).ToListAsync();
+
+        return ordersWithDetails;
+    }
+    
     
     
 }

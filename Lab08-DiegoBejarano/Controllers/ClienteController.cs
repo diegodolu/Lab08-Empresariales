@@ -1,3 +1,4 @@
+using Lab08_DiegoBejarano.Dto;
 using Lab08_DiegoBejarano.Models;
 using Lab08_DiegoBejarano.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +34,27 @@ public class ClienteController : ControllerBase
         }
 
         return Ok(clientWithMostOrders);
+    }
+
+    [HttpGet("clients-orders")]
+    public async Task<IActionResult> GetClientsWithOrders()
+    {
+        var clientWithOrders = await _unitOfWork.Clientes.GetClientsWithOrders();
+        return Ok(clientWithOrders);
+    }
+
+    [HttpGet("client-products")]
+    public async Task<IActionResult> GetClientWithTotalPurchasedProducts()
+    {
+        var clients = await _unitOfWork.Clientes.GetClientWithTotalPurchasedProducts();
+        return Ok(clients);
+    }
+
+    [HttpGet("client-sales")]
+    public async Task<IActionResult> GetClientWithTotalSales()
+    {
+        var clients = await _unitOfWork.Clientes.GetClientWithTotalSales();
+        return Ok(clients);
     }
 
 }

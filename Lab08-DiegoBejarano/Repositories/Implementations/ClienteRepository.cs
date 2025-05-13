@@ -26,5 +26,56 @@ public class ClienteRepository : IClienteRepository
 
         return list;
     }
+
+    public async Task<List<ClientOrderDto>> GetClientsWithOrders()
+    {
+        var clientOrders = await _context.Clients.AsNoTracking().Select(client => new ClientOrderDto
+        {
+            ClientName = client.Name,
+            Orders = client.Orders.Select(order => new OrderDto
+            {
+                OrderId = order.OrderId,
+                OrderDate = order.OrderDate
+            }).ToList()
+        }).ToListAsync();
+
+        return clientOrders;
+    }
+
+    public async Task<List<ClientProductsDto>> GetClientWithTotalPurchasedProducts()
+    {
+        var clientsWithProductCount = await _context.Clients
+            .AsNoTracking()
+            .Select(client => new ClientProductsDto
+            {
+                ClientName = client.Name,
+                TotalProducts = client.Orders
+                    .Sum(order => order.Orderdetails
+                        .Sum(detail => detail.Quantity))
+            })
+            .ToListAsync();
+
+        return clientsWithProductCount;
+    }
+
+    public async Task<List<SalesClientDto>> GetClientWithTotalSales()
+    {
+        var clientes = await _context.Orders
+            .Include(order => order.Orderdetails)
+            .ThenInclude(orderDetail => orderDetail.Product)
+            .AsNoTracking()
+            .GroupBy(order => order.ClientId)
+            .Select(group => new SalesClientDto
+            {
+                ClientName = _context.Clients
+                    .FirstOrDefault(c => c.ClientId == group.Key).Name,
+                TotalSales = group.Sum(order => order.Orderdetails
+                    .Sum(detail => detail.Quantity * detail.Product.Price))
+            })
+            .OrderByDescending(s => s.TotalSales)
+            .ToListAsync();
+
+        return clientes;
+    }
     
 }

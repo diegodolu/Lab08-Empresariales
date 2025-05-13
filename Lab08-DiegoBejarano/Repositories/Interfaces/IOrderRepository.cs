@@ -7,4 +7,5 @@ public interface IOrderRepository
 {
     Task<List<Order>> GetOrdersAfterDateAsync(DateTime date);
     Task<ClientDto> GetClientWithMostOrdersAsync();
+    Task<List<OrderDetailsDto>> GetOrdersWithDetails();
 }
